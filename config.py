@@ -11,7 +11,8 @@ MAX_TOKENS: int = 8192
 
 # ── 파일 경로 설정 ─────────────────────────────────────────
 BASE_DIR: str = os.path.dirname(os.path.abspath(__file__))
-WORK_DIR: str = os.path.join(BASE_DIR, "workspace")  # 작업 파일 저장 루트
+CASES_DIR: str = os.path.join(BASE_DIR, "cases")   # 수집 원본 파일 저장 루트
+WORK_DIR: str = os.path.join(BASE_DIR, "workspace")  # 분석 결과물 저장 루트
 
 # ── 프롬프트 템플릿 ────────────────────────────────────────
 PROMPTS: dict = {
