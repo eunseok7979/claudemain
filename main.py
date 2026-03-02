@@ -94,17 +94,10 @@ def run_step4(case_id: str, client: ClaudeClient, issues: str = "") -> str:
     return document
 
 
-def run_step5(case_id: str, client: ClaudeClient, document: str = "") -> str:
+def run_step5(case_id: str, client: ClaudeClient) -> str:
     """5단계: 요약문 작성."""
-    if not document:
-        doc_path = Path(config.WORK_DIR) / case_id / "output" / "document.txt"
-        if doc_path.exists():
-            document = doc_path.read_text(encoding="utf-8")
-        else:
-            print("  [!] 심의 자료 파일이 없습니다. 4단계를 먼저 실행하세요.")
-            return ""
-
-    summary = summarizer.summarize(document, client)
+    texts = run_step2(case_id)
+    summary = summarizer.summarize(texts, client=client)
     out = Path(config.WORK_DIR) / case_id / "output" / "summary.txt"
     if summary:
         summarizer.save_summary(summary, out)
@@ -128,7 +121,7 @@ def run_all(case_id: str) -> None:
     if document:
         integrator.save_document(document, out_doc)
 
-    summary = summarizer.summarize(document, client)
+    summary = summarizer.summarize(texts, client=client)
     out_summary = Path(config.WORK_DIR) / case_id / "output" / "summary.txt"
     if summary:
         summarizer.save_summary(summary, out_summary)
